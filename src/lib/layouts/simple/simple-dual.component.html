@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-md-12">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form" *ngIf="!loading; else spinner">
+      <div class="card mb-0">
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <div class="card-title">{{title}}</div>
+            <button type="button" (click)="cancelForm();" class="btn btn-outline-secondary btn-icon round mr-1 mb-1">
+              <i class="fa fa-close fa-lg"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body" >
+          <div style="border: 1px solid red; padding: 0.30rem;" class="alert bg-light-danger alert-light-danger" *ngIf="formErrors.length > 0">
+            <strong *ngFor="let error of formErrors">{{error}}</strong>
+          </div>
+          <div class="row">
+            <div class="col-md-6" *ngFor="let element of elements">
+              <form-element [label]="true" [labelType]="'top'" [element]="element" [form]="form"
+                (onValueChange)="onElementValueChange($event)"></form-element>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-center form-actions p-3">
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit" [disabled]="form.invalid || initSubmit ">
+              <span *ngIf="initSubmit" class="spinner-border spinner-border-sm" role="status"></span>
+              <span *ngIf="initSubmit" class="load-text"> Loading...</span>
+              <span *ngIf="!initSubmit" class="btn-text"> <i class="fa fa-dot-circle-o"></i> {{id?
+                'Update':'Save'}}</span>
+            </button>
+            <a class="btn btn-danger ml-3 text-white" data-disable-with="Cancel" name="_continue"
+              (click)="cancelForm()">
+              <i class="fa fa-ban"></i> Cancel
+            </a>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <ng-template #spinner>
+      <div class="spinner-border spinner-border-sm"></div>
+    </ng-template>
+  </div>
+</div>

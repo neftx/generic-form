@@ -1,0 +1,71 @@
+<div *ngIf="element">
+  <ng-container [formGroup]="form">
+    <div class="form-group row" *ngIf="element.controlType !== 'hidden'">
+      <label *ngIf="label && labelType =='left'" class="col-md-3 col-form-label control-label"
+        [attr.for]="element.key">{{element.label}}<span *ngIf="element.required" class="text-danger">*</span></label>
+      <div [ngClass]="label && labelType =='left'? 'col-md-9' : 'col-md-12'">
+        <label *ngIf="label && labelType =='top'" class=" col-form-label control-label"
+          [attr.for]="element.key">{{element.label}}<span *ngIf="element.required" class="text-danger">*</span></label>
+        <ng-container [ngSwitch]="element.controlType">
+          <input *ngSwitchCase="'string'" type="text" [formControlName]="element.key" class="form-control"
+            [placeholder]="element.placeHolder"
+            [class.is-invalid]="getValidation(element.key)">
+
+          <input *ngSwitchCase="'encrypted'" type="password" class="form-control" [formControlName]="element.key"
+            [placeholder]="element.placeHolder" class="form-control"
+            [class.is-invalid]="getValidation(element.key)">
+
+          <textarea *ngSwitchCase="'text'" type="text" [formControlName]="element.key" class="form-control"
+            [placeholder]="element.placeHolder"
+            [class.is-invalid]="getValidation(element.key)"></textarea>
+
+          <input *ngSwitchCase="'number'" type="number" [formControlName]="element.key" class="form-control"
+            [placeholder]="element.placeHolder"
+            [class.is-invalid]="getValidation(element.key)">
+
+          <input *ngSwitchCase="'date'" [type]="element.dateType" [formControlName]="element.key" class="form-control"
+            [placeholder]="element.placeHolder"
+            [class.is-invalid]="getValidation(element.key)">
+          <select *ngSwitchCase="'select-array'" [formControlName]="element.key" name="select"
+            class="form-control form-control-primary">
+            <option hidden value="" disabled selected>{{element.placeHolder}}</option>
+            <option *ngFor="let opt of element.values" [value]="opt.value">{{opt.displayName}}</option>
+          </select>
+
+          <angular-editor [formControlName]="element.key" *ngSwitchCase="'smart-text'"></angular-editor>
+
+          <ng-container *ngSwitchCase="'ng-select'">
+            <ng-select *ngIf="!async" [items]="options" [addTag]="addTag" [dropdownPosition]="multiple? 'top': 'bottom'"
+              [closeOnSelect]="!multiple" [searchable]="searchable" selectOnTab=true [multiple]="multiple"
+              (change)="onChange($event)" [formControlName]="element.key" [placeholder]="element.placeHolder">
+            </ng-select>
+            <ng-select *ngIf="async" [multiple]="multiple" [addTag]="addTag" [closeOnSelect]="!multiple"
+              [formControlName]="element.key" bindLabel="name" [bindValue]="bindValue" selectOnTab=true
+              [loading]="loadBackend" [items]="options" [typeahead]="onSearch$" [placeholder]="element.placeHolder"
+              (change)="onChange($event)">
+            </ng-select>
+          </ng-container>
+         
+          <div *ngSwitchCase="'boolean'" class="custom-switch custom-control-inline mb-1 mb-xl-0 d-flex">
+            
+            <input *ngIf="element.value" type="checkbox" [formControlName]="element.key" class="custom-control-input" id="custom-switch-1" checked >
+            <input *ngIf="!element.value" type="checkbox" [formControlName]="element.key" class="custom-control-input" id="custom-switch-1" >
+            <label class="custom-control-label mr-1 cursor-pointer" for="custom-switch-1">
+            </label>
+          </div>
+          <div class="d-block" *ngSwitchCase="'display'"> {{element.value}}</div>
+        </ng-container>
+        <small class="is-invalid-feedback form-text text-muted" *ngIf="element.controlType !== 'display'">{{element.helpText}}</small>
+        <div class="messages text-danger"
+          *ngIf="element.controlType !== 'display' && form.controls[element.key].touched">
+          <div *ngIf="form.controls[element.key].errors?.required"> {{element.label}} can't be blank</div>
+          <div *ngIf="form.controls[element.key].hasError('minlength')">Minimun {{form.controls[element.key].errors?.minlength.requiredLength}} digits/characters requried</div>
+          <div *ngIf="form.controls[element.key].hasError('maxlength')">Maximum {{form.controls[element.key].errors?.maxlength.requiredLength}} digits/characters allowed</div>
+          <div *ngIf="form.controls[element.key].errors?.pattern"> Invalid {{element.label}}</div>
+          <div *ngIf="form.controls[element.key].hasError('max')">Maximum value is '{{form.controls[element.key].errors?.max.max}}'</div>
+          <div *ngIf="form.controls[element.key].hasError('min')">Minimun value is '{{form.controls[element.key].errors?.min.min}}'</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/neftx/generic-form",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@ng-select/ng-select": "@ng-select/ng-select",
+      "@kolkov/angular-editor": "@kolkov/angular-editor"
+    }
+  },
+  "assets": [
+    "generate-elements.js"
+  ]
+}

@@ -6,8 +6,8 @@ Form builder with typed elements.
 
 Install Generic-Form using the [npm](https://www.npmjs.com/) package manager:
 
-`npm i @neftx/generic-from --save-dev` for Generic Form.
-`npm i @ng-select/ng-select` for Ng-select.
+`npm i @neftx/generic-from --save-dev` for Generic Form.\
+`npm i @ng-select/ng-select` for Ng-select.\
 `npm i @kolkov/angular-editor` for Kolkov editor.
 
 ## Before Using

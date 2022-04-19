@@ -8,12 +8,13 @@ Install Generic-Form using the [npm](https://www.npmjs.com/) package manager:
 
 `npm i @neftx/generic-from --save-dev` for Generic Form.\
 `npm i @ng-select/ng-select` for Ng-select.\
-`npm i @kolkov/angular-editor` for Kolkov editor.
+`npm i @kolkov/angular-editor` for Kolkov editor.\
+`npm i bootstrap` for Bootstrap
 
 ## Before Using
 
-1. Create 2 folders one in root directory as 'schema' another in src/app as 'generated-elements'.
-2. In package.json under script tag add script "generate-elements": "node node_modules/@neftx/generic-form/generate-elements.js
+1. Create 2 folders one in root directory as 'schema' another in src/app as 'elements-generated'.
+2. In package.json under script tag add script ```"generate-elements": "node node_modules/@neftx/generic-form/generate-elements.js```
 3. import GenericFormModule in app.module
 
 ## Creating Form Elements
